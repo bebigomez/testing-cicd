@@ -1,8 +1,5 @@
 name: Testing stuff
 
-env:
-  CONDITION: ${{ contains('kissa') }}
-
 on:
   push:
     branches:

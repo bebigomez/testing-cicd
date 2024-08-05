@@ -1,5 +1,10 @@
 name: some workflow name
 
+on:
+  push:
+    branches:
+      - main
+
 env:
   # the below will be 'true'
   CONDITION: ${{ contains('kissa', 'ss') && contains('koira', 'ra') && contains('pretty long array of criteria to repeat in multiple places', 'crit') }}

@@ -24,4 +24,5 @@ jobs:
         run: echo "$COMMIT_MESSAGES"
 
       - name: check condition for tagging
+        if: ${{ contains(toJson(github.event.commits.*.message), '#skip') }}
         run: echo "Commit messages contains skip"  

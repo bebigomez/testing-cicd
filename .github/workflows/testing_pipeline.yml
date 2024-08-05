@@ -28,4 +28,4 @@ jobs:
 
       - name: check condition for tagging
         if: ${{ env.CONDITION == 'true' }}
-        run: echo 'this step is executed now'
+        run: echo 'this step is executed'

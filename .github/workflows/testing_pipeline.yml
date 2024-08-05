@@ -1,5 +1,8 @@
 name: Testing stuff
 
+env:
+  CONDITION: ${{ contains('kissa') }}
+
 on:
   push:
     branches:
@@ -22,3 +25,10 @@ jobs:
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         run: echo "$COMMIT_MESSAGES"
+      
+      - name: check condition
+        - if: ${{ contains(join(toJson(github.event.commits.*.message)), '#skip') == 'true' }}
+        run: echo "Commit messages contains skip"  
+
+        - if: ${{ contains(join(toJson(github.event.commits.*.message)), '#skip') == 'false' }}
+        run: echo "Commit messages does not contains skip"  

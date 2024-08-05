@@ -13,13 +13,9 @@ jobs:
   job1:
     # rest of the job
     steps:
+      - uses: actions/checkout@v4
       - if: ${{ env.CONDITION == 'true' }}
         run: echo 'this step is executed'
 
       - if: ${{ env.CONDITION == 'false' }}
         run: echo 'this step will not be executed'
-
-  job2:
-    # this job will be dependent on the above env.CONDITION, note the `github.` prefix which seem to be required while referencing the variable on the job level, but not the step level
-    if: ${{ github.env.CONDITION == 'true' }}
-    # rest of the job

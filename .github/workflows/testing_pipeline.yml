@@ -23,8 +23,10 @@ jobs:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         run: echo "$COMMIT_MESSAGES"
       - name: check condition
-        - if: ${{ contains(join(toJson(github.event.commits.*.message)), '#skip') == 'true' }}
+        - if: ${{ contains(toJson(github.event.commits.*.message), '#skip') == 'true' }}
         run: echo "Commit messages contains skip"  
 
-        - if: ${{ contains(join(toJson(github.event.commits.*.message)), '#skip') == 'false' }}
+        - if: ${{ contains(toJson(github.event.commits.*.message), '#skip') == 'false' }}
         run: echo "Commit messages does not contains skip"  
+
+         - name: Bumb up the version number

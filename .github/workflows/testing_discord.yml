@@ -9,15 +9,9 @@ jobs:
   test_discord_job:
     runs-on: ubuntu-20.04
     steps:
-      - name: Test Success
-        uses: rjstone/discord-webhook-notify@v1
-        with:
-            severity: info
-            details: Test Succeeded!
-            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-      - name: Test Failure
-        uses: rjstone/discord-webhook-notify@v1
-        with:
-            severity: error
-            details: Test Failed!
-            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Notify on Success
+        run: |
+          curl -H "Content-Type: application/json" \
+               -X POST \
+               -d '{"content": "Test Succeeded!"}' \
+               ${{ secrets.DISCORD_WEBHOOK }}

@@ -10,9 +10,23 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - name: Send notification to Discord
-        uses: rjstone/discord-webhook-notify@v1
-        with:
-          severity: error
-          details: Test error.
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check style
+        run: npm run eslint
+        
+      - name: Notify on Success
+        if: success()
+        run: |
+          curl -H "Content-Type: application/json" \
+               -X POST \
+               -d '{"content": "Test Succeeded!"}' \
+               ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Something failed
+        if: failure()
+        run: |
+          curl -H "Content-Type: application/json" \
+               -X POST \
+               -d '{"content": "Commit ${{ github.sha }} from repo ${{ github.repository }} failed."}' \
+               ${{ secrets.DISCORD_WEBHOOK }}
